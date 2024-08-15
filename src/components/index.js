@@ -5,6 +5,7 @@ import Booking from './Booking';
 import Immigration from './Immigration';
 import Navbar from './Navbar';
 import Display from './Display';
+import BoardingPass from './Pass';
 
 
 export { 
@@ -15,5 +16,6 @@ export {
     Immigration,
     Navbar,
     Display,
+    BoardingPass
 
  };

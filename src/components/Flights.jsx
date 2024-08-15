@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { styles } from "../styles";
 import { redirect, useNavigate } from "react-router-dom";
 import { format } from 'date-fns';
+import Navbar from "./Navbar";
 
 const Flights = () => {
     const [form, setForm] = useState({
@@ -18,7 +19,7 @@ const Flights = () => {
         currency: "USD",
     });
     const formRef = useRef(null);
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({
@@ -42,171 +43,191 @@ const Flights = () => {
         navigate("/display-flights", { state: form });
         formRef.current.reset();
     };
+    const handleBackClick = () => {
+        navigate("/");
+    };
 
     return (
+        
         <form
-            ref={formRef}
-            onSubmit={handleSubmit}
-            className={`${styles.padding} relative z-0 max-w-7xl mx-auto`}
-        >
-            <h1>Flight Search</h1>
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className="relative z-0 max-w-7xl mx-auto p-8 bg-gradient-to-r from-indigo-900 to-blue-800 rounded-lg shadow-lg"
+    >   
+        <button
+                type="button"
+                onClick={handleBackClick}
+                className="absolute top-4 left-4 bg-white text-indigo-900 py-2 px-4 rounded hover:bg-gray-200 transition duration-300"
+            >
+                Back
+        </button>
+        <h1 className="mt-8 text-3xl font-extrabold text-white text-center">Flight Search</h1>
 
-            <div className="sm:col-span-5 my-4">
-                <label className="block text-sm font-medium leading-6 text-white-900">
-                    From
-                </label>
-                <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        <input
-                            type="text"
-                            name="from"
-                            id="from"
-                            className="block flex-1 border-0 bg-transparent py-2 pl-2 text-white-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                            placeholder="BOM"
-                            value={form.from}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="sm:col-span-4 my-4">
-                <label className="block text-sm font-medium leading-6 text-white-900">
-                    To
-                </label>
-                <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        <input
-                            type="text"
-                            name="to"
-                            id="to"
-                            className="block flex-1 border-0 bg-transparent py-2 pl-2 text-white-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                            placeholder="DEL"
-                            value={form.to}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="relative max-w-sm my-4">
-                <label className="block text-sm font-medium leading-6 text-white-900">
-                    Departure Date
-                </label>
-                <div className="mt-2">
-                    <DatePicker
-                        selected={form.startDate}
-                        onChange={(date) => handleDateChange("startDate", format(date, 'yyyy-MM-dd'))}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholderText="Select date"
+        <div className="sm:col-span-5 my-6">
+            <label className="block text-sm font-medium text-white">
+                From
+            </label>
+            <div className="mt-2 max-w-[370px]">
+                <div className="flex rounded-md shadow-sm ring-2 ring-gray-400 focus-within:ring-2 focus-within:ring-indigo-500">
+                    <input
+                        type="text"
+                        name="from"
+                        id="from"
+                        className="block flex-1 border-0 bg-transparent py-2 px-4 text-white placeholder-gray-400 focus:ring-0 sm:text-sm"
+                        placeholder="BOM"
+                        value={form.from}
+                        onChange={handleChange}
                     />
                 </div>
             </div>
-            <div className="relative max-w-sm my-4">
-                <label className="block text-sm font-medium leading-6 text-white-900">
-                    Arrival Date (optional)
-                </label>
-                <div className="mt-2">
-                    <DatePicker
-                        selected={form.endDate}
-                        onChange={(date) => handleDateChange("endDate", format(date, 'yyyy-MM-dd'))}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholderText="Select date"
+        </div>
+
+        <div className="sm:col-span-5 my-6">
+            <label className="block text-sm font-medium text-white">
+                To
+            </label>
+            <div className="mt-2 max-w-[370px]">
+                <div className="flex rounded-md shadow-sm ring-2 ring-gray-400 focus-within:ring-2 focus-within:ring-indigo-500">
+                    <input
+                        type="text"
+                        name="to"
+                        id="to"
+                        className="block flex-1 border-0 bg-transparent py-2 px-4 text-white placeholder-gray-400 focus:ring-0 sm:text-sm"
+                        placeholder="DEL"
+                        value={form.to}
+                        onChange={handleChange}
                     />
                 </div>
             </div>
-            <div className="relative max-w-sm my-4">
-                <label className="block text-sm font-medium leading-6 text-white-900">
-                    Flight Class
-                </label>
-                <div className="mt-2">
-                    <select
-                        id="classType"
-                        name="classType"
-                        value={form.classType}
-                        onChange={handleChange}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    >
-                        <option value="economy">Economy</option>
-                        <option value="business">Business</option>
-                        <option value="first">First Class</option>
-                    </select>
-                </div>
+        </div>
+
+        <div className="relative max-w-sm my-6">
+            <label className="block text-sm font-medium text-white">
+                Departure Date
+            </label>
+            <div className="mt-2">
+                <DatePicker
+                    selected={form.startDate}
+                    onChange={(date) => handleDateChange("startDate", format(date, 'yyyy-MM-dd'))}
+                    className="bg-transparent border border-gray-600 text-white text-sm rounded-md focus:ring-indigo-500 block w-full p-2.5"
+                    placeholderText="Select date"
+                />
             </div>
-            <div className="relative max-w-sm my-4">
-                <label className="block text-sm font-medium leading-6 text-white-900">
-                    Itinerary Type
-                </label>
-                <div className="mt-2">
-                    <select
-                        id="iterinary"
-                        name="iterinary"
-                        value={form.iterinary}
-                        onChange={handleChange}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    >
-                        <option value="ONE_WAY">One Way</option>
-                        <option value="ROUND_TRIP">Round Trip</option>
-                    </select>
-                </div>
+        </div>
+
+        <div className="relative max-w-sm my-6">
+            <label className="block text-sm font-medium text-white">
+                Arrival Date (optional)
+            </label>
+            <div className="mt-2">
+                <DatePicker
+                    selected={form.endDate}
+                    onChange={(date) => handleDateChange("endDate", format(date, 'yyyy-MM-dd'))}
+                    className="bg-transparent border border-gray-600 text-white text-sm rounded-md focus:ring-indigo-500 block w-full p-2.5"
+                    placeholderText="Select date"
+                />
             </div>
-            <div className="sm:col-span-4 my-4">
-                <label className="block text-sm font-medium leading-6 text-white-900">
-                    No. of Adults
-                </label>
-                <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-[5rem]">
-                        <input
-                            type="number"
-                            name="adults"
-                            id="adults"
-                            className="block flex-1 border-0 bg-transparent py-2 pl-2 text-white-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                            placeholder="1"
-                            value={form.adults}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-                <label className="block text-sm font-medium leading-6 text-white-900 mt-2">
-                    No. of Children (2-18 years) 
-                </label>
-                <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-[5rem]">
-                        <input
-                            type="number"
-                            name="children"
-                            id="children"
-                            className="block flex-1 border-0 bg-transparent py-2 pl-2 text-white-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                            placeholder="0"
-                            value={form.children}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-                <label className="block text-sm font-medium leading-6 text-white-900 mt-2">
-                    Currency Code
-                </label>
-                <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-[5rem]">
-                        <input
-                            type="text"
-                            name="currency"
-                            id="currency"
-                            className="block flex-1 border-0 bg-transparent py-2 pl-2 text-white-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                            placeholder="USD"
-                            value={form.currency}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="mt-6 flex items-center justify-start gap-x-6">
-                <button
-                    type="submit"
-                    className="rounded-md bg-indigo-600 sm:max-w-xs px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        </div>
+
+        <div className="relative max-w-sm my-6">
+            <label className="block text-sm font-medium text-white">
+                Flight Class
+            </label>
+            <div className="mt-2">
+                <select
+                    id="classType"
+                    name="classType"
+                    value={form.classType}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-2 px-3 text-gray-800 shadow-sm ring-2 ring-gray-400 focus:ring-2 focus:ring-indigo-500 sm:text-sm"
                 >
-                    Submit
-                </button>
+                    <option value="economy">Economy</option>
+                    <option value="business">Business</option>
+                    <option value="first">First Class</option>
+                </select>
             </div>
-        </form>
+        </div>
+
+        <div className="relative max-w-sm my-6">
+            <label className="block text-sm font-medium text-white">
+                Itinerary Type
+            </label>
+            <div className="mt-2">
+                <select
+                    id="iterinary"
+                    name="iterinary"
+                    value={form.iterinary}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-2 px-3 text-gray-800 shadow-sm ring-2 ring-gray-400 focus:ring-2 focus:ring-indigo-500 sm:text-sm"
+                >
+                    <option value="ONE_WAY">One Way</option>
+                    <option value="ROUND_TRIP">Round Trip</option>
+                </select>
+            </div>
+        </div>
+
+        <div className="sm:col-span-4 my-6">
+            <label className="block text-sm font-medium text-white">
+                No. of Adults
+            </label>
+            <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-2 ring-gray-400 focus-within:ring-2 focus-within:ring-indigo-500 sm:max-w-[6rem]">
+                    <input
+                        type="number"
+                        name="adults"
+                        id="adults"
+                        className="block flex-1 border-0 bg-transparent py-2 px-4 text-white placeholder-gray-400 focus:ring-0 sm:text-sm"
+                        placeholder="1"
+                        value={form.adults}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
+
+            <label className="block text-sm font-medium text-white mt-6">
+                No. of Children (2-18 years)
+            </label>
+            <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-2 ring-gray-400 focus-within:ring-2 focus-within:ring-indigo-500 sm:max-w-[6rem]">
+                    <input
+                        type="number"
+                        name="children"
+                        id="children"
+                        className="block flex-1 border-0 bg-transparent py-2 px-4 text-white placeholder-gray-400 focus:ring-0 sm:text-sm"
+                        placeholder="0"
+                        value={form.children}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
+
+            <label className="block text-sm font-medium text-white mt-6">
+                Currency Code
+            </label>
+            <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-2 ring-gray-400 focus-within:ring-2 focus-within:ring-indigo-500 sm:max-w-[6rem]">
+                    <input
+                        type="text"
+                        name="currency"
+                        id="currency"
+                        className="block flex-1 border-0 bg-transparent py-2 px-4 text-white placeholder-gray-400 focus:ring-0 sm:text-sm"
+                        placeholder="USD"
+                        value={form.currency}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div className="mt-8 flex items-center justify-start">
+            <button
+                type="submit"
+                className="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500 transition ease-in-out duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+            >
+                Submit
+            </button>
+        </div>
+    </form>
     );
 }
 

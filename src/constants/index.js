@@ -10,10 +10,6 @@ export const navLinks = [
       title: "Food",
     },
     {
-      id: "booking",
-      title: "Booking",
-    },
-    {
       id: "immigration",
       title: "Immigration",
     },

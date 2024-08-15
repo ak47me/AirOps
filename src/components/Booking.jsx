@@ -88,22 +88,54 @@ const Booking = () => {
         </form>
         {notification && <div className="mt-4 text-center text-white">{notification}</div>}
 
-        {iterinaryData.itinerary && iterinaryData.itinerary.legs && iterinaryData.itinerary.legs.length > 0 && (
-            <div className="flight-component mt-[2rem] p-5">
-                <span>{iterinaryData.itinerary.legs[0].origin.name}</span>
-                <input 
-                    type="range" 
-                    className="flight" 
-                    style={{ '--val': 0 }} 
-                    value={0} 
-                    min="0" 
-                    max="90" 
-                    onInput={(e) => e.target.style.setProperty('--val', e.target.value)} 
-                    aria-label="percentage flown" 
-                />
-                <span>{iterinaryData.itinerary.legs[0].destination.name}</span>
-            </div>
-        )}
+        {iterinaryData.itinerary && 
+ iterinaryData.itinerary.legs && 
+ iterinaryData.itinerary.legs.length > 0 && (
+  <div className="flight-timeline mt-8 p-6 bg-gradient-to-r from-indigo-600 to-purple-500 shadow-lg rounded-xl">
+    <div className="flex items-center justify-between text-white">
+      <div className="text-left">
+        <h3 className="text-2xl font-bold">{iterinaryData.itinerary.legs[0].origin.name}</h3>
+        <p className="text-sm mt-1">{iterinaryData.itinerary.legs[0].origin.id}</p>
+      </div>
+
+      <div className="relative flex-1 mx-6">
+        <div className="flex items-center justify-between">
+          <span className="w-1 h-1 bg-white rounded-full"></span>
+          <span className="w-1 h-1 bg-white rounded-full"></span>
+        </div>
+        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white transform -translate-y-1/2"></div>
+        <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black">
+          <svg className="w-8 h-8 transform rotate-90" fill="currentColor" viewBox="0 0 24 20">
+            <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V21h2V13.5l8 2.5z" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="text-right">
+        <h3 className="text-2xl font-bold">{iterinaryData.itinerary.legs[0].destination.name}</h3>
+        <p className="text-sm mt-1">{iterinaryData.itinerary.legs[0].destination.id}</p>
+      </div>
+    </div>
+
+    <div className="mt-4 text-center text-white">
+      <p className="text-lg font-medium">{iterinaryData.itinerary.legs[0].departure} - {iterinaryData.itinerary.legs[0].arrival}</p>
+      <p className="text-sm">Flight Duration: {iterinaryData.itinerary.legs[0].durationInMinutes}</p>
+    </div>
+
+    <div className="mt-6 flex justify-around text-white">
+      <div className="flex flex-col items-center">
+        <p className="text-lg font-semibold">{iterinaryData.itinerary.legs[0].segments[0].marketingCarrier.name}</p>
+        <p className="text-sm">Airline</p>
+      </div>
+      <div className="flex flex-col items-center">
+        <p className="text-lg font-semibold text-white">{iterinaryData.itinerary.legs[0].segments[0].flightNumber}</p>
+        <p className="text-sm">Flight No.</p>
+      </div>
+    </div>
+  </div>
+)}
+
+
         </>
     );
 }
