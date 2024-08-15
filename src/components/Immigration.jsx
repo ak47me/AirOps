@@ -24,7 +24,7 @@ function Immigration() {
     formData.append('id_card', idCard);
 
     try {
-      const response = await axios.post('http://localhost:5000/upload', formData, {
+      const response = await axios.post('https://airops-backend-1-d4e25531bb7e.herokuapp.com/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
